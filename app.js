@@ -4,14 +4,15 @@
 const express = require("express");
 
 const app = express();
-const ExpressError = require("./expressError")
+const ExpressError = require("./expressError");
+const invoiceRoutes = require('./routes/invoices');
 
 app.use(express.json());
-
+app.use('/invoices', invoiceRloutes);
 
 /** 404 handler */
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   const err = new ExpressError("Not Found", 404);
   return next(err);
 });
@@ -27,5 +28,8 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.listen(3000, function () {
+  console.log('Server is running on port 3000');
+});
 
 module.exports = app;

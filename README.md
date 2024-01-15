@@ -34,3 +34,19 @@ DELETE /companies/[code]
 - Deleting a company
 
 ### Invoices
+
+GET /invoices
+- Returns a list of all invoices
+
+GET /invoices/[id]
+- Retrieves a specific invoice by its ID
+
+POST /invoices
+- Adds a new invoice. Requires JSON input
+
+PUT /invoices/[id]
+- Updates an existing invoice. Requires JSON input
+
+DELETE /invoices/[id]
+- Deletes a specific invoice
+

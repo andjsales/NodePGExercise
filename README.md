@@ -11,10 +11,10 @@
 
 ## How to use?
 
-### Companies
-
 Starting the server:
 - npm start
+
+### Company Routes
 
 GET /companies
 - list all companies
@@ -33,7 +33,7 @@ PUT /companies/[code]
 DELETE /companies/[code]
 - Deleting a company
 
-### Invoices
+### Invoice Routes
 
 GET /invoices
 - Returns a list of all invoices

@@ -14,3 +14,7 @@
 - Start the server:
   - npm start
 - GET /companies
+- GET /companies/[code]
+- POST /companies
+- PUT /companies/[code]
+- DELETE /companies/[code]

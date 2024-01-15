@@ -10,7 +10,7 @@
 - express and pg via NPM
 
 ### How to use?
-
+#### Companies
 - Start the server:
   - npm start
 - GET /companies

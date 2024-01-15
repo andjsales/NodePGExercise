@@ -8,7 +8,7 @@ const ExpressError = require("./expressError");
 const invoiceRoutes = require('./routes/invoices');
 
 app.use(express.json());
-app.use('/invoices', invoiceRloutes);
+app.use('/invoices', invoiceRoutes);
 
 /** 404 handler */
 
@@ -28,8 +28,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(3000, function () {
-  console.log('Server is running on port 3000');
-});
+// app.listen(3000, function () {
+//   console.log('Server is running on port 3000');
+// });
 
 module.exports = app;

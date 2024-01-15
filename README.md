@@ -1,16 +1,16 @@
 # Node PG Exercise
 
-### Description
+## Description
 
 - A REST-ful backend API server for a simple company/invoice tracker
 - Node.js and Express
 
-### Setup
+## Setup
 
 - express and pg via NPM
 
-### How to use?
-#### Companies
+## How to use?
+### Companies
 - Start the server:
   - npm start
 - GET /companies

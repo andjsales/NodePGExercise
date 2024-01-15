@@ -11,11 +11,11 @@
 
 ## How to use?
 ### Companies
-- Starting the server:
-  - npm start
-- GET /companies
-  - list all companies
-- GET /companies/[code]
-- POST /companies
-- PUT /companies/[code]
-- DELETE /companies/[code]
+Starting the server:
+- npm start
+GET /companies
+- list all companies
+GET /companies/[code]
+POST /companies
+PUT /companies/[code]
+DELETE /companies/[code]

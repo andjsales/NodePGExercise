@@ -11,9 +11,10 @@
 
 ## How to use?
 ### Companies
-- Start the server:
+- Starting the server:
   - npm start
 - GET /companies
+  - list all companies
 - GET /companies/[code]
 - POST /companies
 - PUT /companies/[code]

@@ -7,9 +7,11 @@ const db = require('../db');
 // `{invoices: [{id, comp_code}, ...]}`
 router.get('/', async function (req, res, next) {
     try {
+
         const result = await db.query('SELECT id, comp_code FROM invoices');
         return res.json({ invoices: result.rows });
     }
+
     catch (err) {
         return next(err);
     }
@@ -20,6 +22,7 @@ router.get('/', async function (req, res, next) {
 // Returns `{invoice: {id, amt, paid, add_date, paid_date, company: {code, name, description}}}`
 router.get('/invoices/:id', async function (req, res, next) {
     try {
+
         const { id } = req.params;
         // handling the request of data for the invoice with the specified ID
         const invoiceResult = await db.query('SELECT id, amt, paid, add_date, paid_date, comp_code FROM invoices WHERE id = $1', [id]);
@@ -34,6 +37,7 @@ router.get('/invoices/:id', async function (req, res, next) {
         invoice.company = companyResult.rows[0];
         return res.json({ invoice: invoice });
     }
+
     catch (err) {
         return next(err);
     }
@@ -44,12 +48,14 @@ router.get('/invoices/:id', async function (req, res, next) {
 // Returns: `{invoice: {id, comp_code, amt, paid, add_date, paid_date}}`
 router.post('/', async function (req, res, next) {
     try {
+
         const { comp_code, amt } = req.body;
         const result = await db.query(
             'INSERT INTO invoices (comp_code, amt) VALUES ($1, $2) RETURNING id, comp_code, amt, paid, add_date, paid_date', [comp_code, amt]
         );
         return res.status(201).json({ invoice: result.rows[0] });
     }
+
     catch (err) {
         return next(err);
     }
@@ -61,6 +67,7 @@ router.post('/', async function (req, res, next) {
 // Returns: `{invoice: {id, comp_code, amt, paid, add_date, paid_date}}`
 router.put('/invoices/:id', async function (req, res, next) {
     try {
+
         const { id } = req.params;
         const { amt } = req.body;
 
@@ -73,6 +80,7 @@ router.put('/invoices/:id', async function (req, res, next) {
 
         return res.json({ invoice: result.rows[0] });
     }
+
     catch (err) {
         return next(err);
     }
@@ -83,8 +91,8 @@ router.put('/invoices/:id', async function (req, res, next) {
 // Returns: {status: "deleted"} Also, one route from the previous part should be updated
 router.delete('/:id', async (req, res, next) => {
     try {
-        const { id } = req.params;
 
+        const { id } = req.params;
         // checking if invoice exists
         const checkInvoice = await db.query('SELECT * FROM invoices WHERE id = $1', [id]);
         if (checkInvoice.rows.length === 0) {
@@ -92,8 +100,8 @@ router.delete('/:id', async (req, res, next) => {
         }
 
         await db.query('DELETE FROM invoices WHERE id = $1', [id]);
-
         return res.json({ status: "deleted" });
+
     } catch (err) {
         return next(err);
     }
@@ -103,6 +111,7 @@ router.delete('/:id', async (req, res, next) => {
 // If the company given cannot be found, this should return a 404 status response
 router.get('/:code', async (req, res, next) => {
     try {
+
         const { code } = req.params;
         // finding the company query
         const companyRes = await db.query(
@@ -120,15 +129,13 @@ router.get('/:code', async (req, res, next) => {
             'SELECT id FROM invoices WHERE comp_code = $1',
             [code]
         );
-
         company.invoices = invoiceRes.rows.map(inv => inv.id);
-
         return res.json({ company: company });
+
     } catch (err) {
         return next(err);
     }
 });
-
 
 
 module.exports = router;

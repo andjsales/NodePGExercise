@@ -10,7 +10,7 @@ describe('GET /invoices', () => {
 
 describe('GET /invoices/:id', () => {
     test('Getting a specific invoice', async () => {
-        const response = await request(app).get('/invoices/4');
+        const response = await request(app).get('/invoices/2');
         expect(response.statusCode).toBe(200);
     });
 });
@@ -25,19 +25,15 @@ describe('POST /invoices', () => {
 
 describe('PUT /invoices/:id', () => {
     test('Updating a specific invoice', async () => {
-        // Assuming 1 is a valid invoice ID in your test database
         const updatedInvoice = { amt: 500 };
-        const response = await request(app).put('/invoices/4').send(updatedInvoice);
+        const response = await request(app).put('/invoices/2').send(updatedInvoice);
         expect(response.statusCode).toBe(200);
-        // Additional assertions can be added here
     });
 });
 
 describe('DELETE /invoices/:id', () => {
     test('Deleting a specific invoice', async () => {
-        // Assuming 1 is a valid invoice ID in your test database
-        const response = await request(app).delete('/invoices/4');
+        const response = await request(app).delete('/invoices/2');
         expect(response.statusCode).toBe(200);
-        // Additional assertions can be added here
     });
 });

@@ -21,7 +21,7 @@ router.get('/', async function (req, res, next) {
 // Returns obj on given invoice.
 // If invoice cannot be found, returns 404. 
 // Returns `{invoice: {id, amt, paid, add_date, paid_date, company: {code, name, description}}}`
-router.get('/invoices/:id', async function (req, res, next) {
+router.get('/:id', async function (req, res, next) {
     try {
 
         const { id } = req.params;
@@ -65,7 +65,7 @@ router.post('/', async function (req, res, next) {
 // If invoice cannot be found, returns a 404.
 // Needs to be passed in a JSON body of `{amt}` 
 // Returns: `{invoice: {id, comp_code, amt, paid, add_date, paid_date}}`
-router.put('/invoices/:id', async function (req, res, next) {
+router.put(':id', async function (req, res, next) {
     try {
 
         const { id } = req.params;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const ExpressError = require("../expressError");
 
 
 // Return info on invoices
@@ -24,7 +25,6 @@ router.get('/invoices/:id', async function (req, res, next) {
     try {
 
         const { id } = req.params;
-        // handling the request of data for the invoice with the specified ID
         const invoiceResult = await db.query('SELECT id, amt, paid, add_date, paid_date, comp_code FROM invoices WHERE id = $1', [id]);
 
         if (invoiceResult.rows.length === 0) {

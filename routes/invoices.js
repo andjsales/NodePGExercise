@@ -63,24 +63,42 @@ router.post('/', async function (req, res, next) {
 
 // Updates an invoice. 
 // If invoice cannot be found, returns a 404.
-// Needs to be passed in a JSON body of `{amt}` 
+// Needs to be passed in a JSON body of `{amt, paid}` 
 // Returns: `{invoice: {id, comp_code, amt, paid, add_date, paid_date}}`
-router.put(':id', async function (req, res, next) {
+router.put('/:id', async function (req, res, next) {
     try {
-
         const { id } = req.params;
-        const { amt } = req.body;
+        const { amt, paid } = req.body;
+        // fetching the current status of the invoice
+        const currentInvoiceResult = await db.query(
+            'SELECT paid, paid_date FROM invoices WHERE id = $1',
+            [id]
+        );
 
-        // checking if invoice exists
-        const checkInvoice = await db.query('SELECT * FROM invoices WHERE id = $1', [id]);
-        if (checkInvoice.rows.length === 0) {
-            return res.status(404).json({ error: "No Invoice found" });
+        if (currentInvoiceResult.rows.length === 0) {
+            return res.status(404).json({ error: "No invoice found" });
         }
-        const result = await db.query('UPDATE invoices SET amt = $1 WHERE id = $2 RETURNING id, comp_code, amt, paid, add_date, paid_date', [amt, id]);
+
+        const currentInvoice = currentInvoiceResult.rows[0];
+
+        let paidDateUpdate = currentInvoice.paid_date;
+
+        // if being marked as paid and was previously unpaid
+        if (paid === true && currentInvoice.paid === false) {
+            paidDateUpdate = new Date();
+        }
+        // else if being marked as unpaid
+        else if (paid === false) {
+            paidDateUpdate = null;
+        }
+
+        const result = await db.query(
+            'UPDATE invoices SET amt = $1, paid = $2, paid_date = $3 WHERE id = $4 RETURNING id, comp_code, amt, paid, add_date, paid_date',
+            [amt, paid, paidDateUpdate, id]
+        );
 
         return res.json({ invoice: result.rows[0] });
     }
-
     catch (err) {
         return next(err);
     }

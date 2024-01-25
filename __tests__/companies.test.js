@@ -11,7 +11,7 @@ describe('GET /companies', () => {
 
 describe('POST /companies', () => {
     test("Creating a new company", async () => {
-        const newCompany = { code: "test", name: "Test Company", description: "Testing if company will be created" };
+        const newCompany = { name: "New Test Company", description: "Testing if company will be created" };
         const response = await request(app).post("/companies/").send(newCompany);
         expect(response.statusCode).toBe(201);
     });
@@ -19,8 +19,9 @@ describe('POST /companies', () => {
 
 describe("PUT /companies/:code", () => {
     test("Updating a specific company", async () => {
+        const code = "apple";
         const updatedData = { name: "Updated Company", description: "Updated Description" };
-        const response = await request(app).put("/companies/test").send(updatedData);
+        const response = await request(app).put(`/companies/${code}`).send(updatedData);
         expect(response.statusCode).toBe(200);
         expect(response.body.company).toHaveProperty("name", "Updated Company");
     });
@@ -28,7 +29,8 @@ describe("PUT /companies/:code", () => {
 
 describe("DELETE /companies/:code", () => {
     test("Deleting a specific company", async () => {
-        const response = await request(app).delete("/companies/test");
+        const code = "apple";
+        const response = await request(app).delete(`/companies/${code}`);
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual({ status: "deleted" });
     });
